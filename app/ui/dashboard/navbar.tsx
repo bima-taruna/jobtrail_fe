@@ -15,7 +15,7 @@ import { ThemeButton } from "./theme-button";
 
 export function Navbar() {
   return (
-    <NavigationMenu className="fixed top-0 w-full max-w-none p-3  justify-between">
+    <NavigationMenu className="fixed bg-white dark:bg-neutral-950 z-50 top-0 w-full max-w-none p-3 justify-between">
       <NavigationMenuItem className={`list-none`}>
         <NavigationMenuLink
           asChild
