@@ -12,20 +12,22 @@ import {
 import Link from "next/link";
 import { poppins } from "@/app/ui/fonts";
 import { ThemeButton } from "./theme-button";
+import { SidebarTrigger } from "@/app/ui/components/sidebar";
 
-export function Navbar() {
+export function Navbar(props: { isSession: boolean }) {
   return (
-    <NavigationMenu className="fixed bg-white dark:bg-neutral-950 z-50 top-0 w-full max-w-none p-3 justify-between">
-      <NavigationMenuItem className={`list-none`}>
-        <NavigationMenuLink
-          asChild
-          className={`${navigationMenuTriggerStyle()} ${
-            poppins.className
-          } font-bold text-2xl list-none`}
-        >
-          <Link href="/">JobTrail</Link>
-        </NavigationMenuLink>
-      </NavigationMenuItem>
+    <NavigationMenu className="fixed bg-white dark:bg-neutral-950 z-50 w-full max-w-none p-3 justify-between">
+      <div className="flex items-center gap-3">
+        {props.isSession ? <SidebarTrigger /> : ""}
+        <NavigationMenuItem className="list-none">
+          <NavigationMenuLink
+            asChild
+            className={`${navigationMenuTriggerStyle()} font-bold text-2xl`}
+          >
+            <Link href="/">JobTrail</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+      </div>
 
       {/* Right side */}
       <NavigationMenuList className="w-full">
