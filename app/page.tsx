@@ -3,13 +3,13 @@ import { poppins } from "@/app/ui/fonts";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center">
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 ">
+      <div className="flex flex-col gap-[32px] row-start-2 items-center">
         <h1 className={`${poppins.className} text-5xl text-center font-bold`}>
           JobTrail
         </h1>
         <h4>Your Path to Organized Job Hunting.</h4>
-      </main>
+      </div>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
