@@ -1,9 +1,9 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+// app/api/auth/[...nextauth]/route.ts
+import NextAuth, { AuthError } from "next-auth";
+import Credentials from "next-auth/providers/credentials";
 
 const API_URL = process.env.API_URL || "http://localhost:8000";
 
-// 🔄 Helper to refresh the access token
 async function refreshAccessToken(token: any) {
   try {
     const res = await fetch(`${API_URL}/auth/refresh_token`, {
@@ -19,8 +19,7 @@ async function refreshAccessToken(token: any) {
     return {
       ...token,
       accessToken: data.access_token,
-      accessTokenExpires: Date.now() + 1000 * 60 * 60, // adjust to backend TTL
-      // keep refreshToken unless backend rotates it
+      accessTokenExpires: Date.now() + 1000 * 60 * 60,
     };
   } catch (error) {
     console.error("Error refreshing access token", error);
@@ -28,31 +27,28 @@ async function refreshAccessToken(token: any) {
   }
 }
 
-export const authOptions = {
+export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
-    CredentialsProvider({
-      name: "Credentials",
+    Credentials({
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: any) {
-        // call FastAPI /auth/login
+      authorize: async (credentials) => {
         const res = await fetch(`${API_URL}/auth/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: credentials.email,
-            password: credentials.password,
+            email: credentials?.email,
+            password: credentials?.password,
           }),
         });
 
         const data = await res.json();
         if (!res.ok || !data.access_token) {
-          return null;
+          throw new AuthError("CredentialsSignin"); // v5 style
         }
 
-        // return everything needed for JWT
         return {
           id: data.user.user_id,
           email: data.user.email,
@@ -62,16 +58,11 @@ export const authOptions = {
       },
     }),
   ],
-  pages: {
-    signIn: "/login",
-  },
-  session: { strategy: "jwt" as const },
+  session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
 
   callbacks: {
-    // 🔑 Controls what gets saved in the JWT
-    async jwt({ token, user }: any) {
-      // First login → attach user info + tokens
+    async jwt({ token, user }) {
       if (user) {
         return {
           ...token,
@@ -79,31 +70,31 @@ export const authOptions = {
           email: user.email,
           accessToken: user.accessToken,
           refreshToken: user.refreshToken,
-          accessTokenExpires: Date.now() + 1000 * 60 * 60, // match backend TTL
+          accessTokenExpires: Date.now() + 1000 * 60 * 60,
         };
       }
 
-      // If token still valid, return it
-      if (Date.now() < token.accessTokenExpires) {
+      if (Date.now() < (token.accessTokenExpires as number)) {
         return token;
       }
 
-      // Otherwise try to refresh
       return await refreshAccessToken(token);
     },
 
-    // 🎁 What goes to the client via useSession()
-    async session({ session, token }: any) {
-      session.user = {
-        id: token.id,
-        email: token.email,
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id as string,
+          email: token.email as string,
+        },
+        accessToken: token.accessToken as string,
+        refreshToken: token.refreshToken as string,
+        error: token.error as string,
       };
-      session.accessToken = token.accessToken;
-      session.error = token.error;
-      return session;
     },
   },
-};
+});
 
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+export const { GET, POST } = handlers;
