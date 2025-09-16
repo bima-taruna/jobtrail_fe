@@ -1,14 +1,16 @@
-"use client";
 import { LogoutButton } from "@/app/ui/auth/LogoutButton";
 import { useSession } from "next-auth/react";
+import { auth } from "../api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
-export default function Page() {
+export default async function Page() {
   // react-query for backend /auth/me
 
-  const { data: session, status } = useSession();
+  const session = await auth();
 
-  if (status === "loading") return <p>Loading...</p>;
-  if (status === "unauthenticated") return <p>Please log in</p>;
+  if (!session) {
+    redirect("/login");
+  }
 
   return (
     <div className="mt-20">
