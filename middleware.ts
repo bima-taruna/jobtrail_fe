@@ -8,5 +8,10 @@ export default auth(async (req) => {
 });
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/settings/:path*", "/profile/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/settings/:path*",
+    "/profile/:path*",
+    "/job_application/:path",
+  ],
 };
