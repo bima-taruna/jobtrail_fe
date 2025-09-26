@@ -12,6 +12,7 @@ import {
 } from "@/app/ui/components/dropdown-menu";
 import { Button } from "@/app/ui/components/button";
 import { MoreHorizontal } from "lucide-react";
+import { useDeleteJobApplication } from "@/hooks/useJobApplication";
 
 export enum JobStatus {
   SAVED = "saved",
@@ -66,6 +67,7 @@ export const JobApplicationColumns: ColumnDef<JobApplication>[] = [
     id: "actions",
     cell: ({ row }) => {
       const job_application = row.original;
+      const deleteJobs = useDeleteJobApplication();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -91,7 +93,10 @@ export const JobApplicationColumns: ColumnDef<JobApplication>[] = [
               Update
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="bg-red-600 text-white hover:bg-red-400">
+            <DropdownMenuItem
+              className="bg-red-600 text-white hover:bg-red-400"
+              onClick={() => deleteJobs.mutate(job_application.id!!)}
+            >
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
