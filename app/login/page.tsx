@@ -1,6 +1,6 @@
 import { poppins } from "@/app/ui/fonts";
-import LoginForm from "../ui/auth/LoginForm";
-import { auth } from "../api/auth/[...nextauth]/route";
+import LoginForm from "@/app/ui/auth/LoginForm";
+import { auth } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
