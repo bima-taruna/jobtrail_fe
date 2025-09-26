@@ -5,8 +5,9 @@ import {
 } from "@/app/definitions/job_application";
 import {
   createJobApplication,
+  deleteJobApplication,
   getUsersJobApplication,
-} from "@/lib/api/jobApplication";
+} from "@/lib/services/jobApplication";
 import {
   useMutation,
   useQuery,
@@ -41,6 +42,17 @@ export function useCreateJobApplication() {
 
   return useMutation({
     mutationFn: (data: JobApplicationInput) => createJobApplication(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["jobApplications"] });
+    },
+  });
+}
+
+export function useDeleteJobApplication() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => deleteJobApplication(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["jobApplications"] });
     },
