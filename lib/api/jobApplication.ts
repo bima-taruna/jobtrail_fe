@@ -1,4 +1,6 @@
 import {
+  JobApplication,
+  JobApplicationInput,
   JobApplicationResponse,
   JobStatus,
 } from "@/app/definitions/job_application";
@@ -29,5 +31,26 @@ export async function getUsersJobApplication(
     }
   );
   if (!res.ok) throw new Error("Failed to fetch job applications");
+  return res.json();
+}
+
+export async function createJobApplication(
+  data: JobApplicationInput
+): Promise<JobApplication> {
+  const headers = await getAuthHeader();
+  const res = await fetch(`${API_URL}/job_applications`, {
+    method: "POST",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.message || "Failed to create job application");
+  }
+
   return res.json();
 }
