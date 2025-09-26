@@ -54,3 +54,15 @@ export async function createJobApplication(
 
   return res.json();
 }
+
+export async function deleteJobApplication(id: string) {
+  const headers = await getAuthHeader();
+  const res = await fetch(`${API_URL}/job_applications/${id}`, {
+    headers,
+    method: "DELETE",
+  });
+  if (!res.ok)
+    throw new Error(`Failed to delete job applications with id : ${id}`);
+  if (res.status === 204) return true;
+  return await res.json();
+}
