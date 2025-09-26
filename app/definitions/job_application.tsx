@@ -1,5 +1,6 @@
 "use client";
 
+import { z } from "zod";
 import { ColumnDef } from "@tanstack/react-table";
 import {
   DropdownMenu,
@@ -74,7 +75,9 @@ export const JobApplicationColumns: ColumnDef<JobApplication>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-center">
+              Actions
+            </DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() =>
                 navigator.clipboard.writeText(
@@ -84,12 +87,26 @@ export const JobApplicationColumns: ColumnDef<JobApplication>[] = [
             >
               Copy payment ID
             </DropdownMenuItem>
+            <DropdownMenuItem className="bg-blue-600 mt-2 hover:bg-blue-300 ">
+              Update
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem className="bg-red-600 text-white hover:bg-red-400">
+              Delete
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
     },
   },
 ];
+
+export const jobApplicationSchema = z.object({
+  job_title: z.string().min(1, "Job title is required"),
+  company_name: z.string().min(1, "Company name is required"),
+  location: z.string().min(1, "Location is required"),
+  application_date: z.coerce.date(),
+  status: z.enum(JobStatus),
+});
+
+export type JobApplicationInput = z.infer<typeof jobApplicationSchema>;
