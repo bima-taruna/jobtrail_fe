@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetJobApplication } from "@/hooks/useJobApplication";
-import { DataTable } from "../dashboard/data-table";
+import { DataTable } from "@/app/ui/dashboard/data-table";
 import { JobApplicationColumns } from "@/app/definitions/job_application";
 
 export default function JobApplicationTable({ userId }: { userId: string }) {
