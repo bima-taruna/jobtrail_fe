@@ -111,7 +111,7 @@ export function CreateJobApplicationForm() {
             name="application_date"
             render={({ field }) => (
               <FormItem className="grid gap-3 ">
-                <FormLabel>Date of birth</FormLabel>
+                <FormLabel>Application Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
