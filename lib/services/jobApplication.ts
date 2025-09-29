@@ -3,6 +3,7 @@ import {
   JobApplicationInput,
   JobApplicationResponse,
   JobStatus,
+  UpdateJobApplication,
 } from "@/app/definitions/job_application";
 import { getSession } from "next-auth/react";
 
@@ -65,4 +66,27 @@ export async function deleteJobApplication(id: string) {
     throw new Error(`Failed to delete job applications with id : ${id}`);
   if (res.status === 204) return true;
   return await res.json();
+}
+
+export async function updateJobApplication(
+  id: string,
+  update_data: UpdateJobApplication
+) {
+  const headers = await getAuthHeader();
+  const res = await fetch(`${API_URL}/job_applications/${id}`, {
+    headers: {
+      ...headers,
+      "Content-Type": "application/json",
+    },
+    method: "PATCH",
+    body: JSON.stringify(update_data),
+  });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(
+      errorData.message || `Failed to update job application with id: ${id}`
+    );
+  }
+
+  return res.json();
 }

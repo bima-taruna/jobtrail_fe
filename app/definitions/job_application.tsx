@@ -13,6 +13,8 @@ import {
 import { Button } from "@/app/ui/components/button";
 import { MoreHorizontal } from "lucide-react";
 import { useDeleteJobApplication } from "@/hooks/useJobApplication";
+import { CustomDialog } from "../ui/job_application/custom-dialog";
+import { UpdateJobApplicationForm } from "../ui/job_application/update-form";
 
 export enum JobStatus {
   SAVED = "saved",
@@ -33,6 +35,14 @@ export interface JobApplication {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date | null;
+}
+
+export interface UpdateJobApplication {
+  job_title?: string;
+  company_name?: string;
+  location?: string;
+  application_date?: Date;
+  status?: JobStatus;
 }
 
 export interface JobApplicationResponse {
@@ -89,12 +99,25 @@ export const JobApplicationColumns: ColumnDef<JobApplication>[] = [
             >
               Copy payment ID
             </DropdownMenuItem>
-            <DropdownMenuItem className="bg-blue-600 mt-2 hover:bg-blue-300 ">
-              Update
-            </DropdownMenuItem>
+
+            <CustomDialog
+              dialog_title="Update Job Application"
+              dialog_description="Change the data that you want to update"
+              triggerButton={
+                <Button className="bg-blue-600 text-white hover:bg-blue-500 cursor-pointer">
+                  Update Job Application
+                </Button>
+              }
+            >
+              <UpdateJobApplicationForm
+                id={job_application.id!!}
+                data={job_application}
+              />
+            </CustomDialog>
+
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              className="bg-red-600 text-white hover:bg-red-400"
+              className="bg-red-600 text-white hover:bg-red-500 cursor-pointer"
               onClick={() => deleteJobs.mutate(job_application.id!!)}
             >
               Delete
@@ -115,3 +138,4 @@ export const jobApplicationSchema = z.object({
 });
 
 export type JobApplicationInput = z.infer<typeof jobApplicationSchema>;
+export const updateJobApplicationSchema = jobApplicationSchema.partial();
