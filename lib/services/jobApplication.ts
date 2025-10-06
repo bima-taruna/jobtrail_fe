@@ -16,7 +16,6 @@ async function getAuthHeader(): Promise<Record<string, string>> {
 }
 
 export async function getUsersJobApplication(
-  user_id: string,
   page: number = 1,
   page_size: number = 10,
   search: string,
@@ -24,7 +23,7 @@ export async function getUsersJobApplication(
 ): Promise<JobApplicationResponse> {
   const headers = await getAuthHeader();
   const res = await fetch(
-    `${API_URL}/job_applications/user/${user_id}?${page}&${page_size}${
+    `${API_URL}/job_applications/user?${page}&${page_size}${
       search ? `&${search}` : ""
     }${status ? `&${status}` : ""}`,
     {
@@ -32,6 +31,17 @@ export async function getUsersJobApplication(
     }
   );
   if (!res.ok) throw new Error("Failed to fetch job applications");
+  return res.json();
+}
+
+export async function getJobApplicationById(
+  id: string
+): Promise<JobApplication> {
+  const headers = await getAuthHeader();
+  const res = await fetch(`${API_URL}/job_applications/${id}`, {
+    headers,
+  });
+  if (!res.ok) throw new Error("Failed to fetch job application");
   return res.json();
 }
 
