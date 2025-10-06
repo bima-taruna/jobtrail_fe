@@ -17,6 +17,7 @@ import {
   TableRow,
 } from "@/app/ui/components/table";
 import { DataTablePagination } from "./table-pagination";
+import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -32,6 +33,8 @@ export function DataTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const router = useRouter();
 
   return (
     <div>
@@ -61,6 +64,14 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={(e) => {
+                    const target = e.target as HTMLElement;
+                    if (target.closest('[data-slot="table-cell"]')) {
+                      const job = row.original as { id: string };
+                      router.push(`/job_application/${job.id}`);
+                    }
+                    return;
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
