@@ -4,8 +4,8 @@ import { useGetJobApplication } from "@/hooks/useJobApplication";
 import { DataTable } from "@/app/ui/dashboard/data-table";
 import { JobApplicationColumns } from "@/app/definitions/job_application";
 
-export default function JobApplicationTable({ userId }: { userId: string }) {
-  const { data, error } = useGetJobApplication(userId);
+export default function JobApplicationTable() {
+  const { data, error } = useGetJobApplication();
   if (error) {
     console.log(error);
     return <p>something went wrong</p>;
