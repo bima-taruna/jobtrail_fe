@@ -15,6 +15,7 @@ import { MoreHorizontal } from "lucide-react";
 import { useDeleteJobApplication } from "@/hooks/useJobApplication";
 import { CustomDialog } from "../ui/job_application/custom-dialog";
 import { UpdateJobApplicationForm } from "../ui/job_application/update-form";
+import { DeleteDialog } from "../ui/job_application/delete-dialog";
 
 export enum JobStatus {
   SAVED = "saved",
@@ -77,7 +78,7 @@ export const JobApplicationColumns: ColumnDef<JobApplication>[] = [
     id: "actions",
     cell: ({ row }) => {
       const job_application = row.original;
-      const deleteJobs = useDeleteJobApplication();
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -116,12 +117,17 @@ export const JobApplicationColumns: ColumnDef<JobApplication>[] = [
             </CustomDialog>
 
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="bg-red-600 text-white hover:bg-red-500 cursor-pointer"
-              onClick={() => deleteJobs.mutate(job_application.id!!)}
+            <CustomDialog
+              dialog_title="Delete Job Application"
+              dialog_description="Do you want to delete this job application?"
+              triggerButton={
+                <Button className="bg-red-600 text-white hover:bg-red-500 cursor-pointer">
+                  Delete Job Application
+                </Button>
+              }
             >
-              Delete
-            </DropdownMenuItem>
+              <DeleteDialog job_id={job_application.id!!} />
+            </CustomDialog>
           </DropdownMenuContent>
         </DropdownMenu>
       );
