@@ -1,4 +1,5 @@
 import {
+  JobApplication,
   JobApplicationInput,
   JobApplicationResponse,
   JobStatus,
@@ -7,6 +8,7 @@ import {
 import {
   createJobApplication,
   deleteJobApplication,
+  getJobApplicationById,
   getUsersJobApplication,
   updateJobApplication,
 } from "@/lib/services/jobApplication";
@@ -18,24 +20,27 @@ import {
 } from "@tanstack/react-query";
 
 export function useGetJobApplication(
-  userId: string,
   page: number = 1,
   pageSize: number = 10,
   search?: string,
   status?: JobStatus
 ) {
   return useSuspenseQuery<JobApplicationResponse>({
-    queryKey: ["jobApplications", userId, page, pageSize, search, status],
+    queryKey: ["jobApplications", page, pageSize, search, status],
     queryFn: () =>
-      userId
-        ? getUsersJobApplication(
-            userId,
-            page,
-            pageSize,
-            search ?? "",
-            status ?? ("" as JobStatus)
-          )
-        : Promise.resolve({ data: [], page: 1, page_size: 0, total: 0 }),
+      getUsersJobApplication(
+        page,
+        pageSize,
+        search ?? "",
+        status ?? ("" as JobStatus)
+      ),
+  });
+}
+
+export function useGetJobApplicationById(id: string) {
+  return useSuspenseQuery<JobApplication>({
+    queryKey: ["jobApplication", id],
+    queryFn: () => getJobApplicationById(id),
   });
 }
 
