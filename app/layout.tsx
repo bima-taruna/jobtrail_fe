@@ -22,7 +22,7 @@ export default async function RootLayout({
   const isSession = session?.user ? true : false;
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.className} antialiased overflow-x-hidden`}>
         <AppProviders>
           <ThemeProvider
             attribute="class"
