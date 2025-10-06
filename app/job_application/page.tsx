@@ -1,6 +1,5 @@
 import { poppins } from "@/app/ui/fonts";
 import JobApplicationTable from "@/app/ui/job_application/job-application-table";
-import { auth } from "@/app/api/auth/[...nextauth]/route";
 import { CustomDialog } from "@/app/ui/job_application/custom-dialog";
 import { Suspense } from "react";
 import { CreateJobApplicationForm } from "../ui/job_application/add-form";
@@ -8,10 +7,8 @@ import { Button } from "../ui/components/button";
 import { PlusIcon } from "lucide-react";
 
 export default async function Page() {
-  const session = await auth();
-  const userId = session?.user.id;
   return (
-    <div className="mt-20 px-3 md:px-24">
+    <div className="mt-20 px-4 md:px-24">
       <h1 className={`${poppins.className} text-2xl font-bold`}>
         List of Job Application
       </h1>
@@ -30,13 +27,9 @@ export default async function Page() {
             <CreateJobApplicationForm />
           </CustomDialog>
         </div>
-        {userId ? (
-          <Suspense fallback={<p>Loading....</p>}>
-            <JobApplicationTable userId={userId} />
-          </Suspense>
-        ) : (
-          <p>No user logged in</p>
-        )}
+        <Suspense fallback={<p>Loading....</p>}>
+          <JobApplicationTable />
+        </Suspense>
       </section>
     </div>
   );
