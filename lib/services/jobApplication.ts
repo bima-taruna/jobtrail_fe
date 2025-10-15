@@ -1,5 +1,6 @@
 import {
   JobApplication,
+  JobApplicationDetail,
   JobApplicationInput,
   JobApplicationResponse,
   JobStatus,
@@ -36,7 +37,7 @@ export async function getUsersJobApplication(
 
 export async function getJobApplicationById(
   id: string
-): Promise<JobApplication> {
+): Promise<JobApplicationDetail> {
   const headers = await getAuthHeader();
   const res = await fetch(`${API_URL}/job_applications/${id}`, {
     headers,

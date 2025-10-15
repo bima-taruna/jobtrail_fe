@@ -1,5 +1,6 @@
 import {
   JobApplication,
+  JobApplicationDetail,
   JobApplicationInput,
   JobApplicationResponse,
   JobStatus,
@@ -38,7 +39,7 @@ export function useGetJobApplication(
 }
 
 export function useGetJobApplicationById(id: string) {
-  return useSuspenseQuery<JobApplication>({
+  return useSuspenseQuery<JobApplicationDetail>({
     queryKey: ["jobApplication", id],
     queryFn: () => getJobApplicationById(id),
   });
