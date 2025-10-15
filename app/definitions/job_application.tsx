@@ -24,6 +24,19 @@ export enum JobStatus {
   OFFERED = "offered",
   REJECTED = "rejected",
   ACCEPTED = "accepted",
+  WITHDRAWN = "withdrawn",
+}
+
+export enum JobAppEvent {
+  SAVED = "SAVED",
+  APPLIED = "APPLIED",
+  INTERVIEW_SCHEDULED = "INTERVIEW_SCHEDULED",
+  INTERVIEW_COMPLETED = "INTERVIEW_COMPLETED",
+  OFFER_RECEIVED = "OFFER_RECEIVED",
+  OFFER_ACCEPTED = "OFFER_ACCEPTED",
+  OFFER_DECLINED = "OFFER_DECLINED",
+  REJECTED = "REJECTED",
+  WITHDRAWN = "WITHDRAWN",
 }
 
 export interface JobApplication {
@@ -32,7 +45,22 @@ export interface JobApplication {
   company_name: string;
   location: string;
   application_date: Date;
-  status: JobStatus;
+  current_status?: JobStatus | null;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date | null;
+}
+
+export interface JobApplicationDetail extends JobApplication {
+  timelines: JobTimelines[];
+  job_interviews: [];
+}
+
+export interface JobTimelines {
+  id: string | null;
+  event_type: JobAppEvent;
+  event_date: Date;
+  notes: string;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date | null;
@@ -43,7 +71,6 @@ export interface UpdateJobApplication {
   company_name?: string;
   location?: string;
   application_date?: Date;
-  status?: JobStatus;
 }
 
 export interface JobApplicationResponse {
@@ -71,7 +98,7 @@ export const JobApplicationColumns: ColumnDef<JobApplication>[] = [
     header: "Location",
   },
   {
-    accessorKey: "status",
+    accessorKey: "current_status",
     header: "Status",
   },
   {
@@ -140,7 +167,6 @@ export const jobApplicationSchema = z.object({
   company_name: z.string().min(1, "Company name is required"),
   location: z.string().min(1, "Location is required"),
   application_date: z.coerce.date(),
-  status: z.enum(JobStatus),
 });
 
 export type JobApplicationInput = z.infer<typeof jobApplicationSchema>;
