@@ -23,7 +23,7 @@ const items = [
   },
   {
     title: "Job Application",
-    url: "/job_application",
+    url: "/job-application",
     icon: List,
   },
   {
