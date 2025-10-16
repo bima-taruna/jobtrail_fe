@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  jobApplicationSchema,
-  JobStatus,
-} from "@/app/definitions/job_application";
+import { jobApplicationSchema } from "@/app/definitions/job-application";
 import {
   Form,
   FormControl,
@@ -29,13 +26,6 @@ import {
 } from "@/app/ui/components/popover";
 import { Calendar } from "@/app/ui/components/calendar";
 import { cn } from "@/lib/utils";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/ui/components/select";
 import z from "zod";
 import { useCreateJobApplication } from "@/hooks/useJobApplication";
 import { useRef } from "react";
