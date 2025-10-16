@@ -5,14 +5,14 @@ import {
   JobApplicationResponse,
   JobStatus,
   UpdateJobApplication,
-} from "@/app/definitions/job_application";
+} from "@/app/definitions/job-application";
 import {
   createJobApplication,
   deleteJobApplication,
   getJobApplicationById,
   getUsersJobApplication,
   updateJobApplication,
-} from "@/lib/services/jobApplication";
+} from "@/lib/services/job-application";
 import {
   useMutation,
   useQuery,
