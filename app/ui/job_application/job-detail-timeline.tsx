@@ -1,4 +1,4 @@
-import { JobTimelines } from "@/app/definitions/job_application";
+import { JobTimelines } from "@/app/definitions/job-timelines";
 import {
   Stepper,
   StepperContent,
@@ -18,28 +18,13 @@ type JobTimelineProps = {
   timelines: JobTimelines[];
 };
 
-const steps = [
-  {
-    title: "Step 1",
-    description: "Desc for Step 1",
-  },
-  {
-    title: "Step 2",
-    description: "Desc for Step 2",
-  },
-  {
-    title: "Step 3",
-    description: "Desc for Step 3",
-  },
-];
-
 export default function JobDetailTimeline({ timelines }: JobTimelineProps) {
   if (!timelines || timelines.length < 1) return <p>timelines not found</p>;
   return (
     <div className="flex items-center justify-center">
       <Stepper
         className="flex flex-col items-start justify-center gap-10"
-        defaultValue={2}
+        defaultValue={timelines.length}
         orientation="vertical"
         indicators={{
           completed: <Check className="size-4" />,
@@ -65,7 +50,7 @@ export default function JobDetailTimeline({ timelines }: JobTimelineProps) {
                   </StepperDescription>
                 </div>
               </StepperTrigger>
-              {index < steps.length - 1 && (
+              {index < timelines.length - 1 && (
                 <StepperSeparator className="absolute inset-y-0 top-7 left-3 -order-1 m-0 -translate-x-1/2 group-data-[orientation=vertical]/stepper-nav:h-[calc(100%-2rem)] group-data-[state=completed]/step:bg-green-500" />
               )}
             </StepperItem>
@@ -73,9 +58,9 @@ export default function JobDetailTimeline({ timelines }: JobTimelineProps) {
         </StepperNav>
 
         <StepperPanel className="text-sm w-56 text-center">
-          {steps.map((step, index) => (
+          {timelines.map((timeline, index) => (
             <StepperContent key={index} value={index + 1}>
-              Step {step.title} content
+              Step {timeline.event_type} content
             </StepperContent>
           ))}
         </StepperPanel>
