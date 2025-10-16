@@ -2,7 +2,7 @@
 
 import { useGetJobApplication } from "@/hooks/useJobApplication";
 import { DataTable } from "@/app/ui/dashboard/data-table";
-import { JobApplicationColumns } from "@/app/definitions/job_application";
+import { JobApplicationColumns } from "@/app/definitions/job-application";
 
 export default function JobApplicationTable() {
   const { data, error } = useGetJobApplication();

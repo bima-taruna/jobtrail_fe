@@ -5,7 +5,7 @@ import {
   JobStatus,
   UpdateJobApplication,
   updateJobApplicationSchema,
-} from "@/app/definitions/job_application";
+} from "@/app/definitions/job-application";
 import {
   Form,
   FormControl,
