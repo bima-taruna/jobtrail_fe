@@ -68,7 +68,7 @@ export function DataTable<TData, TValue>({
                     const target = e.target as HTMLElement;
                     if (target.closest('[data-slot="table-cell"]')) {
                       const job = row.original as { id: string };
-                      router.push(`/job_application/${job.id}`);
+                      router.push(`/job-application/${job.id}`);
                     }
                     return;
                   }}
