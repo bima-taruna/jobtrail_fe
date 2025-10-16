@@ -10,10 +10,11 @@ import {
 import { poppins } from "../fonts";
 import { formatDate } from "@/lib/utils";
 import JobDetailTimeline from "@/app/ui/job_application/job-detail-timeline";
-import { CustomDialog } from "./custom-dialog";
-import { Button } from "../components/button";
+import { CustomDialog } from "@/app/ui/job_application/custom-dialog";
+import { Button } from "@/app/ui/components/button";
 import { PlusIcon } from "lucide-react";
-import { CreateJobApplicationForm } from "./add-form";
+import { CreateJobApplicationForm } from "@/app/ui/job_application/add-form";
+import { CreateJobTimelineForm } from "../timelines/add-form";
 
 interface JobDetailProps {
   id: string;
@@ -67,11 +68,11 @@ export function JobApplicationDetail({ id }: JobDetailProps) {
                 dialog_description="Fill the information of job application that you're currently hiring"
                 triggerButton={
                   <Button>
-                    <PlusIcon /> Add Job Application
+                    <PlusIcon /> Add Timelines
                   </Button>
                 }
               >
-                <CreateJobApplicationForm />
+                <CreateJobTimelineForm job_id={id!!} />
               </CustomDialog>
             </CardTitle>
           </CardHeader>
