@@ -13,7 +13,7 @@ export function DeleteDialog({ job_id }: DeleteDialogProps) {
 
   const handleClick = () => {
     if (job_id) {
-      deleteJobs.mutate(job_id!!);
+      deleteJobs.mutate(job_id);
       buttonClose.current?.click();
     }
   };

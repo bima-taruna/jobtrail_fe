@@ -9,7 +9,7 @@ import {
 } from "@/app/ui/components/card";
 import { poppins } from "../fonts";
 import { formatDate } from "@/lib/utils";
-import JobDetailTimeline from "@/app/ui/job_application/job-detail-timeline";
+import JobDetailTimeline from "@/app/ui/timelines/job-detail-timeline";
 import { CustomDialog } from "@/app/ui/job_application/custom-dialog";
 import { Button } from "@/app/ui/components/button";
 import { PlusIcon } from "lucide-react";
@@ -63,9 +63,9 @@ export function JobApplicationDetail({ id }: JobDetailProps) {
             >
               Job Timelines
               <CustomDialog
-                dialog_title="Add Job Application"
-                dialog_action="Add Job Application"
-                dialog_description="Fill the information of job application that you're currently hiring"
+                dialog_title="Add New Timeline"
+                dialog_action="Add Timelines"
+                dialog_description="Fill the information of job application timeline"
                 triggerButton={
                   <Button>
                     <PlusIcon /> Add Timelines
@@ -77,7 +77,7 @@ export function JobApplicationDetail({ id }: JobDetailProps) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <JobDetailTimeline timelines={data.timelines} />
+            <JobDetailTimeline job_id={id} timelines={data.timelines} />
           </CardContent>
         </Card>
         <Card>
@@ -87,7 +87,7 @@ export function JobApplicationDetail({ id }: JobDetailProps) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <JobDetailTimeline timelines={data.timelines} />
+            <JobDetailTimeline job_id={id} timelines={data.timelines} />
           </CardContent>
         </Card>
       </section>
