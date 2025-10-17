@@ -13,13 +13,25 @@ import {
 } from "@/app/ui/components/stepper";
 import { formatDate } from "@/lib/utils";
 import { Check, LoaderCircleIcon } from "lucide-react";
+import { Button } from "../components/button";
+import { useUndoJobTimeline } from "@/hooks/useJobTimeline";
 
 type JobTimelineProps = {
   timelines: JobTimelines[];
+  job_id: string;
 };
 
-export default function JobDetailTimeline({ timelines }: JobTimelineProps) {
+export default function JobDetailTimeline({
+  timelines,
+  job_id,
+}: JobTimelineProps) {
+  const undoJob = useUndoJobTimeline();
   if (!timelines || timelines.length < 1) return <p>timelines not found</p>;
+  const handleUndo = () => {
+    if (job_id) {
+      undoJob.mutate(job_id);
+    }
+  };
   return (
     <div className="flex items-center justify-center">
       <Stepper
@@ -57,12 +69,19 @@ export default function JobDetailTimeline({ timelines }: JobTimelineProps) {
           ))}
         </StepperNav>
 
-        <StepperPanel className="text-sm w-56 text-center">
+        <StepperPanel className="text-sm w-full flex justify-between items-center">
           {timelines.map((timeline, index) => (
             <StepperContent key={index} value={index + 1}>
-              Step {timeline.event_type} content
+              {timeline.notes}
             </StepperContent>
           ))}
+          {timelines.length > 1 ? (
+            <Button onClick={handleUndo} variant={"destructive"}>
+              Undo
+            </Button>
+          ) : (
+            ""
+          )}
         </StepperPanel>
       </Stepper>
     </div>
