@@ -1,3 +1,4 @@
+"use client";
 import { Calendar, Home, Inbox, List, Search, Settings } from "lucide-react";
 
 import {
@@ -13,6 +14,7 @@ import {
 } from "@/app/ui/components/sidebar";
 import { Navbar } from "./navbar";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 // Menu items.
 const items = [
@@ -44,8 +46,20 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
   return (
-    <Sidebar className="mt-15">
+    <Sidebar collapsible={isMobile ? "offcanvas" : "icon"}>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>

@@ -4,7 +4,11 @@ import { ThemeProvider } from "@/app/ui/components/theme-provider";
 import { Navbar } from "@/app/ui/dashboard/navbar";
 import { inter } from "@/app/ui/fonts";
 import AppProviders from "@/app/ui/components/appProviders";
-import { SidebarProvider, SidebarTrigger } from "@/app/ui/components/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/app/ui/components/sidebar";
 import { AppSidebar } from "@/app/ui/dashboard/app-sidebar";
 import { auth } from "./api/auth/[...nextauth]/route";
 
@@ -22,7 +26,7 @@ export default async function RootLayout({
   const isSession = session?.user ? true : false;
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} antialiased overflow-x-hidden`}>
+      <body className={`${inter.className} antialiased`}>
         <AppProviders>
           <ThemeProvider
             attribute="class"
@@ -30,15 +34,20 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <SidebarProvider>
-              <div className="grid grid-cols-[auto_1fr] min-h-screen">
-                {isSession ? <AppSidebar /> : ""}
-                <div className="flex flex-col flex-1">
+            {isSession ? (
+              <SidebarProvider>
+                <AppSidebar />
+                <SidebarInset className="max-w-full">
                   <Navbar isSession={isSession} />
-                  <main className="flex-1 min-w-screen">{children}</main>
-                </div>
+                  <main>{children}</main>
+                </SidebarInset>
+              </SidebarProvider>
+            ) : (
+              <div className="flex flex-col min-h-screen">
+                <Navbar isSession={isSession} />
+                <main className="flex-1">{children}</main>
               </div>
-            </SidebarProvider>
+            )}
           </ThemeProvider>
         </AppProviders>
       </body>
