@@ -41,7 +41,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/select";
-import { Textarea } from "../components/textarea";
+import { Textarea } from "@/app/ui/components/textarea";
+import { Spinner } from "@/app/ui/components/spinner";
 
 interface JobTimelineProps {
   job_id: string;
@@ -145,25 +146,34 @@ export function CreateJobTimelineForm({ job_id }: JobTimelineProps) {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="notes"
+            render={({ field }) => (
+              <FormItem className="grid col-span-2 gap-3">
+                <FormLabel>Note :</FormLabel>
+                <FormControl>
+                  <Textarea {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-        <FormField
-          control={form.control}
-          name="notes"
-          render={({ field }) => (
-            <FormItem className="grid col-span-2 gap-3">
-              <FormLabel>Note :</FormLabel>
-              <FormControl>
-                <Textarea {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <DialogFooter className="mt-3">
           <DialogClose ref={buttonClose} asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
-          <Button type="submit">Save changes</Button>
+          <Button disabled={createJobTimeline.isPending} type="submit">
+            {createJobTimeline.isPending ? (
+              <>
+                <Spinner />
+                Saving ...
+              </>
+            ) : (
+              "Save changes"
+            )}
+          </Button>
         </DialogFooter>
       </form>
     </Form>

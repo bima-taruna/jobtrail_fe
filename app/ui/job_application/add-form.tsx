@@ -29,6 +29,7 @@ import { cn } from "@/lib/utils";
 import z from "zod";
 import { useCreateJobApplication } from "@/hooks/useJobApplication";
 import { useRef } from "react";
+import { Spinner } from "@/app/ui/components/spinner";
 export function CreateJobApplicationForm() {
   const createJobApplication = useCreateJobApplication();
   const buttonClose = useRef<HTMLButtonElement>(null);
@@ -143,7 +144,16 @@ export function CreateJobApplicationForm() {
           <DialogClose ref={buttonClose} asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
-          <Button type="submit">Save changes</Button>
+          <Button disabled={createJobApplication.isPending} type="submit">
+            {createJobApplication.isPending ? (
+              <>
+                <Spinner />
+                "Saving ..."
+              </>
+            ) : (
+              "Save changes"
+            )}
+          </Button>
         </DialogFooter>
       </form>
     </Form>

@@ -31,19 +31,10 @@ import {
 } from "@/app/ui/components/popover";
 import { Calendar } from "@/app/ui/components/calendar";
 import { cn } from "@/lib/utils";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/ui/components/select";
 import z from "zod";
-import {
-  useCreateJobApplication,
-  useUpdateJobApplication,
-} from "@/hooks/useJobApplication";
+import { useUpdateJobApplication } from "@/hooks/useJobApplication";
 import { useRef } from "react";
+import { Spinner } from "@/app/ui/components/spinner";
 
 export interface UpdateFormProps {
   id: string;
@@ -165,7 +156,16 @@ export function UpdateJobApplicationForm({ id, data }: UpdateFormProps) {
           <DialogClose ref={buttonClose} asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
-          <Button type="submit">Save changes</Button>
+          <Button disabled={updateJobApplication.isPending} type="submit">
+            {updateJobApplication.isPending ? (
+              <>
+                <Spinner />
+                "Saving ..."
+              </>
+            ) : (
+              "Save changes"
+            )}
+          </Button>
         </DialogFooter>
       </form>
     </Form>

@@ -15,6 +15,7 @@ import { formatDate } from "@/lib/utils";
 import { Check, LoaderCircleIcon } from "lucide-react";
 import { Button } from "../components/button";
 import { useUndoJobTimeline } from "@/hooks/useJobTimeline";
+import { Spinner } from "../components/spinner";
 
 type JobTimelineProps = {
   timelines: JobTimelines[];
@@ -70,14 +71,18 @@ export default function JobDetailTimeline({
         </StepperNav>
 
         <StepperPanel className="text-sm w-full flex justify-between items-center">
-          {timelines.map((timeline, index) => (
+          {/* {timelines.map((timeline, index) => (
             <StepperContent key={index} value={index + 1}>
               {timeline.notes}
             </StepperContent>
-          ))}
+          ))} */}
           {timelines.length > 1 ? (
-            <Button onClick={handleUndo} variant={"destructive"}>
-              Undo
+            <Button
+              onClick={handleUndo}
+              disabled={undoJob.isPending}
+              variant={"destructive"}
+            >
+              {undoJob.isPending ? <Spinner /> : "Undo"}
             </Button>
           ) : (
             ""
