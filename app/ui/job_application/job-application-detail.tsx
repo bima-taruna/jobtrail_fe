@@ -67,8 +67,11 @@ export function JobApplicationDetail({ id }: JobDetailProps) {
                 dialog_action="Add Timelines"
                 dialog_description="Fill the information of job application timeline"
                 triggerButton={
-                  <Button>
-                    <PlusIcon /> Add Timelines
+                  <Button
+                    className="bg-green-500 text-white"
+                    variant={"outline"}
+                  >
+                    <PlusIcon />
                   </Button>
                 }
               >
