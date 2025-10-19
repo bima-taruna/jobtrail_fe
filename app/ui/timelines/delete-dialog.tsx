@@ -2,7 +2,7 @@ import { DialogClose, DialogFooter } from "@/app/ui/components/dialog";
 import { Button } from "@/app/ui/components/button";
 import { useRef } from "react";
 import { useResetJobTimeline } from "@/hooks/useJobTimeline";
-import { Spinner } from "../components/spinner";
+import { Spinner } from "@/app/ui/components/spinner";
 
 interface DeleteDialogProps {
   job_id: string;

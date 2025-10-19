@@ -2,6 +2,7 @@ import { DialogClose, DialogFooter } from "@/app/ui/components/dialog";
 import { Button } from "@/app/ui/components/button";
 import { useRef } from "react";
 import { useDeleteJobApplication } from "@/hooks/useJobApplication";
+import { Spinner } from "@/app/ui/components/spinner";
 
 interface DeleteDialogProps {
   job_id: string;
@@ -26,12 +27,15 @@ export function DeleteDialog({ job_id }: DeleteDialogProps) {
             Cancel
           </Button>
         </DialogClose>
-        <Button
-          className="cursor-pointer"
-          variant={"destructive"}
-          onClick={handleClick}
-        >
-          Delete
+        <Button disabled={deleteJobs.isPending} onClick={handleClick}>
+          {deleteJobs.isPending ? (
+            <>
+              <Spinner />
+              Resetting ...
+            </>
+          ) : (
+            "Reset"
+          )}
         </Button>
       </DialogFooter>
     </>
