@@ -12,9 +12,9 @@ import { formatDate } from "@/lib/utils";
 import JobDetailTimeline from "@/app/ui/timelines/job-detail-timeline";
 import { CustomDialog } from "@/app/ui/job_application/custom-dialog";
 import { Button } from "@/app/ui/components/button";
-import { PlusIcon } from "lucide-react";
-import { CreateJobApplicationForm } from "@/app/ui/job_application/add-form";
-import { CreateJobTimelineForm } from "../timelines/add-form";
+import { PlusIcon, RefreshCcw } from "lucide-react";
+import { CreateJobTimelineForm } from "@/app/ui/timelines/add-form";
+import { DeleteDialog } from "@/app/ui/timelines/delete-dialog";
 
 interface JobDetailProps {
   id: string;
@@ -62,21 +62,37 @@ export function JobApplicationDetail({ id }: JobDetailProps) {
               className={`${poppins.className} text-xl font-bold flex justify-between`}
             >
               Job Timelines
-              <CustomDialog
-                dialog_title="Add New Timeline"
-                dialog_action="Add Timelines"
-                dialog_description="Fill the information of job application timeline"
-                triggerButton={
-                  <Button
-                    className="bg-green-500 text-white"
-                    variant={"outline"}
+              <div className="flex gap-3">
+                {data.timelines.length > 1 && (
+                  <CustomDialog
+                    dialog_title="Reset Job Timeline"
+                    dialog_description="Do you want to reset this job timeline?"
+                    triggerButton={
+                      <Button className="bg-red-600 text-white hover:bg-red-500 cursor-pointer">
+                        <RefreshCcw />
+                      </Button>
+                    }
                   >
-                    <PlusIcon />
-                  </Button>
-                }
-              >
-                <CreateJobTimelineForm job_id={id!!} />
-              </CustomDialog>
+                    <DeleteDialog job_id={id!!} />
+                  </CustomDialog>
+                )}
+
+                <CustomDialog
+                  dialog_title="Add New Timeline"
+                  dialog_action="Add Timelines"
+                  dialog_description="Fill the information of job application timeline"
+                  triggerButton={
+                    <Button
+                      className="bg-green-500 text-white"
+                      variant={"outline"}
+                    >
+                      <PlusIcon />
+                    </Button>
+                  }
+                >
+                  <CreateJobTimelineForm job_id={id!!} />
+                </CustomDialog>
+              </div>
             </CardTitle>
           </CardHeader>
           <CardContent>

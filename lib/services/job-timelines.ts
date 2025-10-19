@@ -34,7 +34,28 @@ export async function createJobTimeline(
 export async function undoJobTimeline(job_id: string) {
   const headers = await getAuthHeader();
   const res = await fetch(
-    `${API_URL}/job-applications/${job_id}/job-timelines`,
+    `${API_URL}/job-applications/${job_id}/job-timelines/undo`,
+    {
+      method: "DELETE",
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.message || "Failed to delete");
+  }
+
+  return res.json();
+}
+
+export async function resetJobTimeline(job_id: string) {
+  const headers = await getAuthHeader();
+  const res = await fetch(
+    `${API_URL}/job-applications/${job_id}/job-timelines/reset`,
     {
       method: "DELETE",
       headers: {
