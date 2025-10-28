@@ -16,7 +16,10 @@ import { SidebarTrigger, useSidebar } from "@/app/ui/components/sidebar";
 import { Button } from "../components/button";
 
 export function Navbar(props: { isSession: boolean }) {
-  const { state, isMobile } = useSidebar();
+  const sidebarState = props.isSession
+    ? useSidebar()
+    : { state: null, isMobile: false };
+  const { state, isMobile } = sidebarState;
   return (
     <header
       className={`fixed top-0 z-50 w-screen border-b bg-white dark:bg-neutral-950 ${

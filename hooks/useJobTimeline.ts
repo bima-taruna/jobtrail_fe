@@ -3,6 +3,7 @@ import {
   createJobTimeline,
   resetJobTimeline,
   undoJobTimeline,
+  updateTimelineNote,
 } from "@/lib/services/job-timelines";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -39,6 +40,24 @@ export function useResetJobTimeline() {
 
   return useMutation({
     mutationFn: (job_id: string) => resetJobTimeline(job_id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["jobApplication"] });
+    },
+  });
+}
+
+export function useUpdateTimelineNote() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      timeline_id,
+      job_id,
+      notes,
+    }: {
+      timeline_id: string;
+      job_id: string;
+      notes: string;
+    }) => updateTimelineNote(timeline_id, job_id, notes),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["jobApplication"] });
     },

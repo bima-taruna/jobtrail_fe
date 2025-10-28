@@ -18,3 +18,6 @@ export const jobTimelineSchema = z.object({
 });
 
 export type JobTimelineInput = z.infer<typeof jobTimelineSchema>;
+export const UpdateTimelineNoteSchema = jobTimelineSchema
+  .pick({ notes: true })
+  .partial();
