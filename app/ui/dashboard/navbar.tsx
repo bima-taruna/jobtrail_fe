@@ -14,6 +14,7 @@ import { poppins } from "@/app/ui/fonts";
 import { ThemeButton } from "./theme-button";
 import { SidebarTrigger, useSidebar } from "@/app/ui/components/sidebar";
 import { Button } from "../components/button";
+import { User2 } from "lucide-react";
 
 export function Navbar(props: { isSession: boolean }) {
   const sidebarState = props.isSession
@@ -26,8 +27,8 @@ export function Navbar(props: { isSession: boolean }) {
         state === "expanded" && !isMobile
           ? "pr-70"
           : state === "collapsed" && !isMobile
-          ? "pr-15"
-          : ""
+            ? "pr-15"
+            : ""
       }`}
     >
       <NavigationMenu className={`max-w-full pr-70 p-3 justify-between`}>
@@ -49,12 +50,16 @@ export function Navbar(props: { isSession: boolean }) {
             <ThemeButton />
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={navigationMenuTriggerStyle()}
-            >
-              <Link href="/login">Login</Link>
-            </NavigationMenuLink>
+            {props.isSession ? (
+              <User2 />
+            ) : (
+              <NavigationMenuLink
+                asChild
+                className={navigationMenuTriggerStyle()}
+              >
+                <Link href="/login">Login</Link>
+              </NavigationMenuLink>
+            )}
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
