@@ -15,6 +15,8 @@ import { Button } from "@/app/ui/components/button";
 import { PlusIcon, RefreshCcw } from "lucide-react";
 import { CreateJobTimelineForm } from "@/app/ui/timelines/add-form";
 import { DeleteDialog } from "@/app/ui/timelines/delete-dialog";
+import { JobDetailInterviews } from "../interviews/job-detail-interviews";
+import { Badge } from "@/app/ui/components/badge";
 
 interface JobDetailProps {
   id: string;
@@ -45,12 +47,14 @@ export function JobApplicationDetail({ id }: JobDetailProps) {
           </CardHeader>
           <CardContent>
             <div className="flex gap-2">
-              <p className="font-bold">Applied on : </p>{" "}
+              <p className="font-bold">Applied on : </p>
               <p>{formatDate(data ? data.application_date.toString() : "")}</p>
             </div>
-            <div className="flex gap-2">
-              <p className="font-bold">Status : </p>{" "}
-              <p>{data?.current_status}</p>
+            <div className="mt-2 flex gap-3">
+              <p className="font-bold">Status : </p>
+              <Badge className="bg-green-500 text-white">
+                {data?.current_status}
+              </Badge>
             </div>
           </CardContent>
         </Card>
@@ -106,7 +110,7 @@ export function JobApplicationDetail({ id }: JobDetailProps) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <JobDetailTimeline job_id={id} timelines={data.timelines} />
+            <JobDetailInterviews job_id={id} interviews={data.job_interviews} />
           </CardContent>
         </Card>
       </section>
