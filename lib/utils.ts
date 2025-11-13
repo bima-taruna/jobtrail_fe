@@ -10,3 +10,8 @@ export function formatDate(params: string) {
   const formattedDate = date.toLocaleDateString("id-ID");
   return formattedDate;
 }
+
+export function truncateMultiline(str: string, limit = 150) {
+  if (str.length <= limit) return str;
+  return str.slice(0, limit) + "...";
+}
