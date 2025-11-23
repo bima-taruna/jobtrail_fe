@@ -1,3 +1,5 @@
+import z from "zod";
+
 export enum JobInterviewType {
   PHONE = "phone",
   VIDEO = "video",
@@ -14,3 +16,12 @@ export interface JobInterview {
   updated_at: Date;
   deleted_at: Date | null;
 }
+
+export const jobInterviewSchema = z.object({
+  interview_type: z.enum(JobInterviewType),
+  interview_date: z.date(),
+  interviewer_name: z.string().min(2).max(100),
+  notes: z.string().min(10).max(500).optional(),
+});
+
+export type JobInterviewInput = z.infer<typeof jobInterviewSchema>;
