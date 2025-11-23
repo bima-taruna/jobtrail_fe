@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  JobAppEvent,
-  jobApplicationSchema,
-} from "@/app/definitions/job-application";
+import { JobAppEvent } from "@/app/definitions/job-application";
 import {
   Form,
   FormControl,
@@ -15,13 +12,9 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogClose, DialogFooter } from "@/app/ui/components/dialog";
-
 import { format } from "date-fns";
-
 import { Button } from "@/app/ui/components/button";
-
 import { CalendarIcon } from "lucide-react";
-import { Input } from "@/app/ui/components/input";
 import {
   Popover,
   PopoverContent,
@@ -30,7 +23,6 @@ import {
 import { Calendar } from "@/app/ui/components/calendar";
 import { cn } from "@/lib/utils";
 import z from "zod";
-import { useCreateJobApplication } from "@/hooks/useJobApplication";
 import { useRef } from "react";
 import { jobTimelineSchema } from "@/app/definitions/job-timelines";
 import { useCreateJobTimeline } from "@/hooks/useJobTimeline";
@@ -44,9 +36,9 @@ import {
 import { Textarea } from "@/app/ui/components/textarea";
 import { Spinner } from "@/app/ui/components/spinner";
 
-interface JobTimelineProps {
+type JobTimelineProps = {
   job_id: string;
-}
+};
 
 export function CreateJobTimelineForm({ job_id }: JobTimelineProps) {
   const createJobTimeline = useCreateJobTimeline();
@@ -62,7 +54,6 @@ export function CreateJobTimelineForm({ job_id }: JobTimelineProps) {
   });
 
   function onSubmit(values: z.infer<typeof jobTimelineSchema>) {
-    console.log(values);
     createJobTimeline.mutate(
       { job_id, data: values },
       {
@@ -70,7 +61,7 @@ export function CreateJobTimelineForm({ job_id }: JobTimelineProps) {
           buttonClose.current?.click();
           form.reset();
         },
-      }
+      },
     );
   }
 
@@ -118,7 +109,7 @@ export function CreateJobTimelineForm({ job_id }: JobTimelineProps) {
                         variant={"outline"}
                         className={cn(
                           "w-[200px] md:w-[180px] pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
+                          !field.value && "text-muted-foreground",
                         )}
                       >
                         {field.value ? (
