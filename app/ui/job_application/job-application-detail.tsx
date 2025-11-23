@@ -17,6 +17,7 @@ import { CreateJobTimelineForm } from "@/app/ui/timelines/add-form";
 import { DeleteDialog } from "@/app/ui/timelines/delete-dialog";
 import { JobDetailInterviews } from "../interviews/job-detail-interviews";
 import { Badge } from "@/app/ui/components/badge";
+import { CreateJobInterviewForm } from "../interviews/add-form";
 
 interface JobDetailProps {
   id: string;
@@ -80,7 +81,6 @@ export function JobApplicationDetail({ id }: JobDetailProps) {
                     <DeleteDialog job_id={id!!} />
                   </CustomDialog>
                 )}
-
                 <CustomDialog
                   dialog_title="Add New Timeline"
                   dialog_action="Add Timelines"
@@ -105,8 +105,22 @@ export function JobApplicationDetail({ id }: JobDetailProps) {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className={`${poppins.className} text-xl font-bold`}>
+            <CardTitle
+              className={`${poppins.className} text-xl font-bold flex justify-between items-center`}
+            >
               Job Interviews
+              <CustomDialog
+                dialog_title="Add New Interview"
+                dialog_action="Add Interview"
+                dialog_description="Fill the information of the interview"
+                triggerButton={
+                  <Button variant={"outline"}>
+                    <PlusIcon />
+                  </Button>
+                }
+              >
+                <CreateJobInterviewForm job_id={id} />
+              </CustomDialog>
             </CardTitle>
           </CardHeader>
           <CardContent>
