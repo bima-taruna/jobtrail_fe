@@ -1,4 +1,5 @@
 import { JobTimelineInput } from "@/app/definitions/job-timelines";
+import { deleteJobInterview } from "@/lib/services/job-interviews";
 import {
   createJobTimeline,
   resetJobTimeline,

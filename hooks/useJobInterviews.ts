@@ -1,5 +1,8 @@
 import { JobInterviewInput } from "@/app/definitions/job-interviews";
-import { createJobInterview } from "@/lib/services/job-interviews";
+import {
+  createJobInterview,
+  deleteJobInterview,
+} from "@/lib/services/job-interviews";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useCreateJobInterview() {
@@ -13,6 +16,22 @@ export function useCreateJobInterview() {
       data: JobInterviewInput;
       job_id: string;
     }) => createJobInterview(data, job_id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["jobApplication"] });
+    },
+  });
+}
+
+export function useDeleteJobInterview() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      interview_id,
+      job_id,
+    }: {
+      interview_id: string;
+      job_id: string;
+    }) => deleteJobInterview(interview_id, job_id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["jobApplication"] });
     },

@@ -18,7 +18,6 @@ import { useUndoJobTimeline } from "@/hooks/useJobTimeline";
 import { Spinner } from "../components/spinner";
 import { CustomDialog } from "../job_application/custom-dialog";
 import { UpdateNotesForm } from "./update-notes-form";
-import { time } from "node:console";
 
 type JobTimelineProps = {
   timelines: JobTimelines[];

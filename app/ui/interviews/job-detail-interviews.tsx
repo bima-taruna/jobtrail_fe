@@ -11,7 +11,11 @@ export function JobDetailInterviews({ interviews, job_id }: JobInterviewProps) {
   return (
     <div className="flex flex-col gap-3 md:grid md:grid-cols-2 md:gap-2">
       {interviews.map((interview) => (
-        <InterviewCard key={interview.id} interview={interview} />
+        <InterviewCard
+          key={interview.id}
+          interview={interview}
+          job_id={job_id}
+        />
       ))}
     </div>
   );
