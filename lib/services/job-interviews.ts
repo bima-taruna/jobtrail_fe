@@ -26,3 +26,24 @@ export async function createJobInterview(
 
   return res.json();
 }
+
+export async function deleteJobInterview(interview_id: string, job_id: string) {
+  const headers = await getAuthHeader();
+  const res = await fetch(
+    `${API_URL}/job-applications/${job_id}/interviews/${interview_id}`,
+    {
+      method: "DELETE",
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
+    },
+  );
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.message || "Failed to delete job ");
+  }
+
+  return null;
+}
