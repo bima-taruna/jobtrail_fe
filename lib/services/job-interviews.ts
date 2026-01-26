@@ -1,7 +1,8 @@
 import {
   JobInterview,
   JobInterviewInput,
-} from "../../app/definitions/job-interviews";
+  UpdateJobInterview,
+} from "@/app/definitions/job-interviews";
 import { getAuthHeader } from "./job-application";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -46,4 +47,30 @@ export async function deleteJobInterview(interview_id: string, job_id: string) {
   }
 
   return null;
+}
+
+export async function updateJobInterview(
+  interview_id: string,
+  job_id: string,
+  data: UpdateJobInterview,
+) {
+  const headers = await getAuthHeader();
+  const res = await fetch(
+    `${API_URL}/job-applications/${job_id}/interviews/${interview_id}`,
+    {
+      method: "PATCH",
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    },
+  );
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.message || "Failed to update job interview");
+  }
+
+  return res.json();
 }

@@ -11,6 +11,7 @@ import { Button } from "@/app/ui/components/button";
 import { NotebookPen, Trash } from "lucide-react";
 import { CustomDialog } from "../job_application/custom-dialog";
 import { DeleteDialog } from "./delete-dialog";
+import { UpdateJobInterviewForm } from "./update-interview-form";
 type InterviewCardProps = {
   interview: JobInterview;
   job_id: string;
@@ -34,9 +35,21 @@ export function InterviewCard({ interview, job_id }: InterviewCardProps) {
             >
               <DeleteDialog job_id={job_id} interview_id={interview?.id!!} />
             </CustomDialog>
-            <Button variant={"outline"} size={"sm"}>
-              <NotebookPen />
-            </Button>
+            <CustomDialog
+              dialog_title="Update Interview"
+              dialog_description="See or update interview"
+              triggerButton={
+                <Button variant={"outline"} size={"sm"}>
+                  <NotebookPen />
+                </Button>
+              }
+            >
+              <UpdateJobInterviewForm
+                job_id={job_id}
+                interview_id={interview?.id!!}
+                data={interview}
+              />
+            </CustomDialog>
           </div>
         </CardTitle>
         <div className="w-full flex justify-between">

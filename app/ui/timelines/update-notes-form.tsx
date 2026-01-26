@@ -46,8 +46,8 @@ export function UpdateNotesForm({
   function onSubmit(values: z.infer<typeof UpdateTimelineNoteSchema>) {
     updateTimelineNote.mutate(
       {
-        job_id,
         timeline_id,
+        job_id,
         notes: values.notes ? values.notes : "",
       },
       {

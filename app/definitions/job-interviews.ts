@@ -17,6 +17,13 @@ export interface JobInterview {
   deleted_at: Date | null;
 }
 
+export interface UpdateJobInterview {
+  interview_type?: JobInterviewType;
+  interview_date?: Date;
+  interviewer_name?: string;
+  notes?: string;
+}
+
 export const jobInterviewSchema = z.object({
   interview_type: z.enum(JobInterviewType),
   interview_date: z.date(),
@@ -25,3 +32,4 @@ export const jobInterviewSchema = z.object({
 });
 
 export type JobInterviewInput = z.infer<typeof jobInterviewSchema>;
+export const UpdateJobInterviewSchema = jobInterviewSchema.partial();
