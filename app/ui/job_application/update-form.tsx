@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  jobApplicationSchema,
-  JobStatus,
   UpdateJobApplication,
   updateJobApplicationSchema,
 } from "@/app/definitions/job-application";
@@ -62,7 +60,7 @@ export function UpdateJobApplicationForm({ id, data }: UpdateFormProps) {
           buttonClose.current?.click();
           form.reset(values);
         },
-      }
+      },
     );
   }
 
@@ -122,7 +120,7 @@ export function UpdateJobApplicationForm({ id, data }: UpdateFormProps) {
                         variant={"outline"}
                         className={cn(
                           "w-[200px] md:w-[180px] pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
+                          !field.value && "text-muted-foreground",
                         )}
                       >
                         {field.value ? (
